@@ -1,0 +1,118 @@
+run:
+  default_variant: base
+  default_dataset: restaurants
+  default_seed: 42
+  default_ablation: full
+
+paths:
+  output_root: outputs/{dataset}/{variant}/seed_{seed}
+  ablation_output_root: outputs/{dataset}/{variant}/{ablation}/seed_{seed}
+  checkpoint_file: checkpoints/best_model.pt
+  metrics_file: results/best_metrics.json
+  predictions_file: predictions/full_test_predictions.csv
+  isa_predictions_file: predictions/isa_test_predictions.csv
+  epoch_metrics_file: results/epoch_metrics.jsonl
+  aggregate_file: outputs/{dataset}/{variant}/aggregate_metrics.json
+  ablation_aggregate_file: outputs/{dataset}/{variant}/{ablation}/aggregate_metrics.json
+
+data:
+  max_source_length: 128
+  truncation_strategy: target_centered
+  start_marker: <extra_id_0>
+  end_marker: <extra_id_1>
+  datasets:
+    restaurants:
+      train: data/restaurants/Restaurants_Train_v2_Implicit_Labeled.xml
+      test: data/restaurants/Restaurants_Test_Gold_Implicit_Labeled.xml
+      subjectivity_class_weights: [2.5, 0.6]
+      polarity_class_weights: [1.0, 2.5]
+    laptops:
+      train: data/laptops/Laptops_Train_v2_Implicit_Labeled.xml
+      test: data/laptops/Laptops_Test_Gold_Implicit_Labeled.xml
+      subjectivity_class_weights: [2.5, 0.6]
+      polarity_class_weights: [1.0, 1.0]
+
+models:
+  base:
+    pretrained_name: google/flan-t5-base
+    dtype: float32
+  xxl:
+    pretrained_name: google/flan-t5-xxl
+    dtype: bfloat16
+    lora:
+      rank: 16
+      alpha: 32
+      dropout: 0.05
+      target_modules: [q, v]
+
+architecture:
+  projection_dimension: 256
+  projection_dropout: 0.2
+  conditional_polarity_inference: true
+
+ablations:
+  full:
+    use_aspect_marker: true
+    representation_mode: start_marker
+    use_two_subspaces: true
+    use_orthogonality: true
+    use_class_weights: true
+  wo_aspect_marker:
+    use_aspect_marker: false
+    representation_mode: mean_prompt
+    use_two_subspaces: true
+    use_orthogonality: true
+    use_class_weights: true
+  wo_orthogonality:
+    use_aspect_marker: true
+    representation_mode: start_marker
+    use_two_subspaces: true
+    use_orthogonality: false
+    use_class_weights: true
+  wo_two_subspaces:
+    use_aspect_marker: true
+    representation_mode: start_marker
+    use_two_subspaces: false
+    use_orthogonality: false
+    use_class_weights: false
+  wo_class_weights:
+    use_aspect_marker: true
+    representation_mode: start_marker
+    use_two_subspaces: true
+    use_orthogonality: true
+    use_class_weights: false
+  end_marker:
+    use_aspect_marker: true
+    representation_mode: end_marker
+    use_two_subspaces: true
+    use_orthogonality: true
+    use_class_weights: true
+  mean_span_pooling:
+    use_aspect_marker: true
+    representation_mode: mean_span
+    use_two_subspaces: true
+    use_orthogonality: true
+    use_class_weights: true
+
+training:
+  batch_size: 16
+  evaluation_batch_size: 16
+  epochs: 8
+  backbone_learning_rate: 2.0e-5
+  head_learning_rate: 5.0e-4
+  orthogonality_weight: 0.5
+  label_smoothing: 0.1
+  optimizer: adamw
+  weight_decay: 0.01
+  scheduler: linear
+  warmup_ratio: 0.10
+  gradient_clip_norm: 1.0
+  checkpoint_selection_metric: isa_macro_f1
+
+runtime:
+  device: auto
+  deterministic: true
+  num_workers: 0
+  pin_memory: false
+  fused_adam: false
+  checkpoint_trainable_only_for_lora: true
