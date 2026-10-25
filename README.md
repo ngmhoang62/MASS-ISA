@@ -39,7 +39,7 @@
 **MASS** (*Marker-Aligned Subspace Separation*) is a supervised fine-tuning framework for **Aspect-Based Sentiment Analysis (ABSA)** and **Implicit Sentiment Analysis (ISA)** built on the Flan-T5 encoder. Unlike approaches that rely on costly LLM-driven synthetic data augmentation or error-prone multi-hop generation chains, MASS directly addresses two fundamental bottlenecks in implicit sentiment reasoning—*limited focus on the target aspect term* and *frequent confusion at the Neutral–Polar boundary*:
 
 * **Aspect Marker & Structured Two-Step Prompting**: Wraps the target aspect term with sentinel tokens (`<extra_id_0>` and `<extra_id_1>`) inside a structured two-step instruction prompt and extracts the aspect-focused contextual representation at the `<extra_id_0>` marker position solely from the Flan-T5 encoder.
-* **Subjectivity–Polarity Subspace Decomposition**: Projects this marker representation into two separate representation subspaces—*Subjectivity* (`Neutral` vs. `Polar`) and *Polarity* (`Positive` vs. `Negative`)—optimized jointly via class-balanced cross-entropy losses ($\mathcal{L}_{\text{subj}}, \mathcal{L}_{\text{pol}}$) and a Frobenius-norm orthogonality regularization penalty ($\gamma \mathcal{L}_{\text{ortho}}$), followed by hierarchical inference.
+* **Subjectivity–Polarity Subspace Decomposition**: Projects this marker representation into two separate representation subspaces—*Subjectivity* (`Neutral` vs. `Polar`) and *Polarity* (`Positive` vs. `Negative`)—optimized jointly via class-balanced cross-entropy losses and a Frobenius-norm orthogonality regularization penalty, followed by hierarchical inference.
 
 ---
 
@@ -174,7 +174,7 @@ Each run saves its artifacts under `outputs/{dataset}/{variant}/seed_{seed}/` (o
 
 * `checkpoints/best_model.pt` — Model weights from the epoch achieving the highest ISA Macro-F1.
 * `results/best_metrics.json` — Best evaluation metrics (`all_accuracy`, `all_macro_f1`, `isa_accuracy`, `isa_macro_f1`) and resolved configuration.
-* `results/epoch_metrics.jsonl` — Per-epoch training losses ($\mathcal{L}_{\text{total}}, \mathcal{L}_{\text{subj}}, \mathcal{L}_{\text{pol}}, \mathcal{L}_{\text{ortho}}$) and test metrics.
+* `results/epoch_metrics.jsonl` — Per-epoch training losses and test metrics.
 * `predictions/full_test_predictions.csv` — Instance-level predictions on the full test set (`All`).
 * `predictions/isa_test_predictions.csv` — Instance-level predictions on the implicit-only subset (`ISA`).
 * `aggregate_metrics.json` — Mean and standard deviation aggregated across all specified seeds.
