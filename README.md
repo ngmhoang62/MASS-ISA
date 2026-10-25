@@ -88,11 +88,11 @@ We evaluate on the **Laptop** and **Restaurant** benchmarks from SemEval-2014 Ta
 
 | Domain | Split | Total | Positive | Negative | Neutral | Implicit (%) |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: |
-| **Laptop** | Train | 2,313 | 987 | 866 | 460 | 716 (30.96%) |
-| | Test | 638 | 341 | 128 | 169 | 175 (27.43%) |
+| | Train | 2,313 | 987 | 866 | 460 | 716 (30.96%) |
+| **Laptop** | Test | 638 | 341 | 128 | 169 | 175 (27.43%) |
 | | **Total** | **2,951** | **1,328** | **994** | **629** | **891 (30.19%)** |
-| **Restaurant** | Train | 3,602 | 2,164 | 805 | 633 | 1,030 (28.60%) |
-| | Test | 1,120 | 728 | 196 | 196 | 267 (23.84%) |
+| | Train | 3,602 | 2,164 | 805 | 633 | 1,030 (28.60%) |
+| **Restaurant** | Test | 1,120 | 728 | 196 | 196 | 267 (23.84%) |
 | | **Total** | **4,722** | **2,892** | **1,001** | **829** | **1,297 (27.47%)** |
 
 ---
@@ -101,23 +101,147 @@ We evaluate on the **Laptop** and **Restaurant** benchmarks from SemEval-2014 Ta
 
 Main experimental comparison across `Flan-T5-Base` (250M) and LLM (`8B–11B`) backbones, averaged over 3 random seeds. Within each backbone group, the best score is shown in **bold** and the second-best is <u>underlined</u>.
 
-| Method | Rest. All-Acc. | Rest. All-MF1 | Rest. ISA-Acc. | Rest. ISA-MF1 | Lap. All-Acc. | Lap. All-MF1 | Lap. ISA-Acc. | Lap. ISA-MF1 |
-| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| Flan-T5-Base + THOR | 86.16 | 77.98 | 64.42 | 64.69 | 80.72 | 76.70 | 73.14 | 69.07 |
-| Flan-T5-Base + Vanilla Inst-FT | 86.52 | 79.10 | 64.79 | 65.31 | 81.03 | 77.39 | 75.43 | 71.29 |
-| Flan-T5-Base + RVISA<sub>v</sub> | 86.43 | 78.49 | 65.92 | – | 80.72 | 76.49 | 73.71 | – |
-| Flan-T5-Base + MT-ISA<sub>O</sub> | 85.89 | 77.85 | 66.29 | – | 81.98 | 78.10 | 75.43 | – |
-| Flan-T5-Base + RVISA<sub>g</sub> | 86.61 | 78.92 | 66.67 | – | 81.19 | 77.13 | 75.43 | – |
-| Flan-T5-Base + MT-ISA<sub>I</sub> | <u>88.21</u> | <u>82.45</u> | <u>70.41</u> | – | **82.91** | <u>79.86</u> | <u>80.57</u> | – |
-| **Flan-T5-Base + MASS (Ours)** | **88.35** | **83.47** | **74.87** | **73.21** | <u>82.19</u> | **80.34** | **81.67** | **75.08** |
-| Llama-3.1-8B-IT + Vanilla Inst-FT | 89.11 | 82.53 | 76.78 | 77.07 | 82.60 | 78.74 | 77.14 | 75.17 |
-| Qwen3-8B + Vanilla Inst-FT | <u>90.62</u> | <u>85.03</u> | <u>77.53</u> | <u>77.15</u> | <u>83.39</u> | <u>80.12</u> | <u>80.57</u> | <u>77.60</u> |
-| **Flan-T5-XXL + MASS (Ours)** | **91.16** | **86.27** | **82.77** | **81.88** | **85.89** | **82.95** | **87.43** | **85.16** |
+<table>
+  <thead>
+    <tr>
+      <th rowspan="3" align="left">Method</th>
+      <th colspan="4" align="center">Restaurant</th>
+      <th colspan="4" align="center">Laptop</th>
+    </tr>
+    <tr>
+      <th colspan="2" align="center">Accuracy</th>
+      <th colspan="2" align="center">Macro-F1</th>
+      <th colspan="2" align="center">Accuracy</th>
+      <th colspan="2" align="center">Macro-F1</th>
+    </tr>
+    <tr>
+      <th align="center">All</th>
+      <th align="center">ISA</th>
+      <th align="center">All</th>
+      <th align="center">ISA</th>
+      <th align="center">All</th>
+      <th align="center">ISA</th>
+      <th align="center">All</th>
+      <th align="center">ISA</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Flan-T5-Base + THOR</td>
+      <td align="center">86.16</td>
+      <td align="center">64.42</td>
+      <td align="center">77.98</td>
+      <td align="center">64.69</td>
+      <td align="center">80.72</td>
+      <td align="center">73.14</td>
+      <td align="center">76.70</td>
+      <td align="center">69.07</td>
+    </tr>
+    <tr>
+      <td>Flan-T5-Base + Vanilla Inst-FT</td>
+      <td align="center">86.52</td>
+      <td align="center">64.79</td>
+      <td align="center">79.10</td>
+      <td align="center">65.31</td>
+      <td align="center">81.03</td>
+      <td align="center">75.43</td>
+      <td align="center">77.39</td>
+      <td align="center">71.29</td>
+    </tr>
+    <tr>
+      <td>Flan-T5-Base + RVISA<sub>v</sub></td>
+      <td align="center">86.43</td>
+      <td align="center">65.92</td>
+      <td align="center">78.49</td>
+      <td align="center">–</td>
+      <td align="center">80.72</td>
+      <td align="center">73.71</td>
+      <td align="center">76.49</td>
+      <td align="center">–</td>
+    </tr>
+    <tr>
+      <td>Flan-T5-Base + MT-ISA<sub>O</sub></td>
+      <td align="center">85.89</td>
+      <td align="center">66.29</td>
+      <td align="center">77.85</td>
+      <td align="center">–</td>
+      <td align="center">81.98</td>
+      <td align="center">75.43</td>
+      <td align="center">78.10</td>
+      <td align="center">–</td>
+    </tr>
+    <tr>
+      <td>Flan-T5-Base + RVISA<sub>g</sub></td>
+      <td align="center">86.61</td>
+      <td align="center">66.67</td>
+      <td align="center">78.92</td>
+      <td align="center">–</td>
+      <td align="center">81.19</td>
+      <td align="center">75.43</td>
+      <td align="center">77.13</td>
+      <td align="center">–</td>
+    </tr>
+    <tr>
+      <td>Flan-T5-Base + MT-ISA<sub>I</sub></td>
+      <td align="center"><u>88.21</u></td>
+      <td align="center"><u>70.41</u></td>
+      <td align="center"><u>82.45</u></td>
+      <td align="center">–</td>
+      <td align="center"><b>82.91</b></td>
+      <td align="center"><u>80.57</u></td>
+      <td align="center"><u>79.86</u></td>
+      <td align="center">–</td>
+    </tr>
+    <tr>
+      <td><b>Flan-T5-Base + MASS (Ours)</b></td>
+      <td align="center"><b>88.35</b></td>
+      <td align="center"><b>74.87</b></td>
+      <td align="center"><b>83.47</b></td>
+      <td align="center"><b>73.21</b></td>
+      <td align="center"><u>82.19</u></td>
+      <td align="center"><b>81.67</b></td>
+      <td align="center"><b>80.34</b></td>
+      <td align="center"><b>75.08</b></td>
+    </tr>
+    <tr>
+      <td>Llama-3.1-8B-IT + Vanilla Inst-FT</td>
+      <td align="center">89.11</td>
+      <td align="center">76.78</td>
+      <td align="center">82.53</td>
+      <td align="center">77.07</td>
+      <td align="center">82.60</td>
+      <td align="center">77.14</td>
+      <td align="center">78.74</td>
+      <td align="center">75.17</td>
+    </tr>
+    <tr>
+      <td>Qwen3-8B + Vanilla Inst-FT</td>
+      <td align="center"><u>90.62</u></td>
+      <td align="center"><u>77.53</u></td>
+      <td align="center"><u>85.03</u></td>
+      <td align="center"><u>77.15</u></td>
+      <td align="center"><u>83.39</u></td>
+      <td align="center"><u>80.57</u></td>
+      <td align="center"><u>80.12</u></td>
+      <td align="center"><u>77.60</u></td>
+    </tr>
+    <tr>
+      <td><b>Flan-T5-XXL + MASS (Ours)</b></td>
+      <td align="center"><b>91.16</b></td>
+      <td align="center"><b>82.77</b></td>
+      <td align="center"><b>86.27</b></td>
+      <td align="center"><b>81.88</b></td>
+      <td align="center"><b>85.89</b></td>
+      <td align="center"><b>87.43</b></td>
+      <td align="center"><b>82.95</b></td>
+      <td align="center"><b>85.16</b></td>
+    </tr>
+  </tbody>
+</table>
 
 > **Notation:**
-> * **Domains**: `Rest.` = Restaurant, `Lap.` = Laptop.
-> * **Evaluation Subsets**: `All` = Evaluation on the full test set (both explicit and implicit sentiment instances), `ISA` = Evaluation on the implicit-only test set subset.
-> * **Metrics**: `Acc.` = Accuracy (%), `MF1` = Macro-F1 (%).
+> * `All` = Evaluation on the full test set (both explicit and implicit sentiment instances).
+> * `ISA` = Evaluation on the implicit-only test set subset.
 
 ---
 
