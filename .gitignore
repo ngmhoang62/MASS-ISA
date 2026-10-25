@@ -1,0 +1,30 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Experiment outputs, checkpoints, logs, and cached artifacts
+outputs/
+checkpoints/
+logs/
+results/
+*.pt
+*.pth
+*.bin
+*.safetensors
+
+# Archives
+*.zip
+*.tar
+*.tar.gz
+
+# IDE / OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

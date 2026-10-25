@@ -1,0 +1,9 @@
+torch==2.11.0+cu128
+transformers==5.13.1
+peft==0.19.1
+accelerate==1.14.0
+tqdm==4.67.3
+numpy==2.0.2
+scikit-learn==1.6.1
+sentencepiece==0.2.2
+PyYAML==6.0.3
