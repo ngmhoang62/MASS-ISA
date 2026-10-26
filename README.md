@@ -2,8 +2,8 @@
 
 # Marker–Aligned Subspace Separation for Implicit Sentiment Analysis (MASS)
 
-[![Venue](https://img.shields.io/badge/Venue-SOICT%202026%20(Accepted)-blue?style=flat-square)](./paper.pdf)
-[![Paper PDF](https://img.shields.io/badge/Paper-PDF-b31b1b?style=flat-square&logo=adobeacrobatreader&logoColor=white)](./paper.pdf)
+[![Venue](https://img.shields.io/badge/Venue-SOICT%202026%20(Accepted)-blue?style=flat-square)](./Marker–Aligned_Subspace_Separation_for_Implicit_Sentiment_Analysis.pdf)
+[![Paper PDF](https://img.shields.io/badge/Paper-PDF-b31b1b?style=flat-square&logo=adobeacrobatreader&logoColor=white)](./Marker–Aligned_Subspace_Separation_for_Implicit_Sentiment_Analysis.pdf)
 [![Colab Notebook](https://img.shields.io/badge/Notebook-Google%20Colab-f9ab00?style=flat-square&logo=googlecolab&logoColor=white)](./MASS_run_notebook.ipynb)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776ab?style=flat-square&logo=python&logoColor=white)](./requirements.txt)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.11-ee4c2c?style=flat-square&logo=pytorch&logoColor=white)](./requirements.txt)
@@ -11,7 +11,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](./LICENSE)
 
 **Official PyTorch implementation of the SOICT 2026 paper:**  
-📄 **[Marker–Aligned Subspace Separation for Implicit Sentiment Analysis](./paper.pdf)**
+📄 **[Marker–Aligned Subspace Separation for Implicit Sentiment Analysis](./Marker–Aligned_Subspace_Separation_for_Implicit_Sentiment_Analysis.pdf)**
 
 [Overview](#overview) •
 [Repository Structure](#repository-structure) •
@@ -47,7 +47,7 @@
 
 ```text
 MASS/
-├── paper.pdf                # Paper PDF
+├── Marker–Aligned_Subspace_Separation_for_Implicit_Sentiment_Analysis.pdf
 ├── figure.png               # Figure 1 architecture diagram (high-resolution PNG)
 ├── config.yaml              # Full experiment, model, hyperparameter, and ablation configurations
 ├── main.py                  # CLI entrypoint for training, evaluation, and multi-seed aggregation
