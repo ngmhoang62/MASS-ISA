@@ -216,14 +216,25 @@ Main experimental comparison across `Flan-T5-Base` (250M) and LLM (`8B–11B`) b
     </tr>
     <tr>
       <td>Qwen3-8B + Vanilla Inst-FT</td>
-      <td align="center"><u>90.62</u></td>
-      <td align="center"><u>77.53</u></td>
-      <td align="center"><u>85.03</u></td>
-      <td align="center"><u>77.15</u></td>
-      <td align="center"><u>83.39</u></td>
-      <td align="center"><u>80.57</u></td>
-      <td align="center"><u>80.12</u></td>
-      <td align="center"><u>77.60</u></td>
+      <td align="center">90.62</td>
+      <td align="center">77.53</td>
+      <td align="center">85.03</td>
+      <td align="center">77.15</td>
+      <td align="center">83.39</td>
+      <td align="center">80.57</td>
+      <td align="center">80.12</td>
+      <td align="center">77.60</td>
+    </tr>
+    <tr>
+      <td>Flan-T5-XXL + Vanilla Inst-FT</td>
+      <td align="center"><u>90.89</u></td>
+      <td align="center"><u>80.15</u></td>
+      <td align="center"><u>85.68</u></td>
+      <td align="center"><u>80.01</u></td>
+      <td align="center"><u>85.42</u></td>
+      <td align="center"><u>86.29</u></td>
+      <td align="center"><u>82.67</u></td>
+      <td align="center"><u>84.63</u></td>
     </tr>
     <tr>
       <td><b>Flan-T5-XXL + MASS (Ours)</b></td>
